@@ -46,6 +46,6 @@ export async function setupTelegramHook(request: HttpRequest, context: Invocatio
 
 app.http('setupTelegramHook', {
     methods: ['POST'],
-    authLevel: 'anonymous',
+    authLevel: 'function',
     handler: setupTelegramHook
 });

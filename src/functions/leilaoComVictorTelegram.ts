@@ -10,6 +10,6 @@ export async function leilaoComVictorTelegram(request: HttpRequest, context: Inv
 
 app.http('leilaoComVictorTelegram', {
     methods: ['GET', 'POST'],
-    authLevel: 'anonymous',
+    authLevel: 'function',
     handler: leilaoComVictorTelegram
 });
