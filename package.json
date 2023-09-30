@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@azure/functions": "^4.0.0",
+    "@azure/storage-blob": "^12.16.0",
     "node-telegram-bot-api": "^0.63.0",
     "openai": "^4.10.0"
   },
