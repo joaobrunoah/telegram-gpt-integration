@@ -29,7 +29,7 @@ export async function leilaoComVictorTelegram(request: HttpRequest, context: Inv
 };
 
 app.http('leilaoComVictorTelegram', {
-    methods: ['GET', 'POST'],
+    methods: ['POST'],
     authLevel: 'function',
     handler: leilaoComVictorTelegram
 });
