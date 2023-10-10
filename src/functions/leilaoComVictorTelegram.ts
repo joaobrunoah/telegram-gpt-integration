@@ -2,6 +2,9 @@ import { app, HttpRequest, HttpResponseInit, InvocationContext } from "@azure/fu
 // const { OpenAIApi } = require('openai');
 import * as TelegramBot from 'node-telegram-bot-api';
 import { getTelegramBotKeyFromFunctionName } from "../services/telegram-db.service";
+import { TelegramMessage } from "../interfaces/telegramMessage.types";
+import { getUserlistFromFunctionName } from "../services/userlist-db.service";
+import { getChatgptCompletion } from "../services/azure-openai.service";
 
 /* const openaiApiKey = process.env.OPENAI_KEY;
 const openai = new OpenAIApi({ key: openaiApiKey }); */
@@ -18,14 +21,43 @@ export async function leilaoComVictorTelegram(request: HttpRequest, context: Inv
         }
     }
     
-    const body:{message: {chat: {id: string}, text: string}} = JSON.parse(await request.text());
+    let userlist: string[] = [];
+    try {
+        userlist = await getUserlistFromFunctionName('leilaoComVictorTelegram');
+    } catch (err) {
+        return {
+            status: 500,
+            body: `Error getting userlist from DB:\n\n${JSON.stringify(err)}`
+        }
+    }
+
+    const body: TelegramMessage = JSON.parse(await request.text());
+
+    const username = body.message.from.username;
     const chatId = body.message.chat.id;
     const text = body.message.text;
 
     const bot = new TelegramBot(telegramBotKey);
-    bot.sendMessage(chatId, `Você enviou a mensagem ${text}`);
 
-    return { body: `chatId: ${chatId}, text: ${text}` };
+    if (userlist.indexOf(username) < 0) {
+        bot.sendMessage(chatId, `Usuário não cadastrado`);
+
+        return {
+            body: `User is unauthorized`,
+            status: 401
+        }
+    }
+    
+    const systemMessage = "Você se chama Victor, e é um professor de " + 
+        "investimentos que possuí um curso online. Como professor, " + 
+        "se precisar de mais informações, pode perguntar. Procure dar " +
+        "respostas de no máximo 200 caracteres. Você fala português do Brasil.";
+
+    const answer = await getChatgptCompletion({message: text, systemMessage});
+
+    bot.sendMessage(chatId, answer);
+
+    return { body: `Ok!` };
 };
 
 app.http('leilaoComVictorTelegram', {

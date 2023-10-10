@@ -2,7 +2,7 @@ import { app, HttpRequest, HttpResponseInit, InvocationContext } from "@azure/fu
 import * as TelegramBot from 'node-telegram-bot-api';
 import * as path from 'path';
 
-import { ISetupTelegramWebhookBody } from "../modules/setupTelegramWebhook/setupTelegramWebhook.types";
+import { ISetupTelegramWebhookBody } from "../interfaces/setupTelegramWebhook.types";
 import { saveNewEntryToTelegramDb } from "../services/telegram-db.service";
 
 const FUNCTION_BASE_URL = process.env.FUNCTION_BASE_URL;
@@ -41,7 +41,7 @@ export async function setupTelegramHook(request: HttpRequest, context: Invocatio
         }
     }
 
-    const telegramBot = new TelegramBot(body.telegramBotToken, { polling: true });
+    const telegramBot = new TelegramBot(body.telegramBotToken);
 
     try {
         await telegramBot.setWebHook(webhookUrl);
