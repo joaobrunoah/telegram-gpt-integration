@@ -33,7 +33,7 @@ export async function leilaoComVictorTelegram(request: HttpRequest, context: Inv
 
     const body: TelegramMessage = JSON.parse(await request.text());
 
-    context.log(body);
+    context.info(body);
 
     const username = body.message.from.username;
     const firstName = body.message.from.first_name;
