@@ -36,13 +36,13 @@ export async function leilaoComVictorTelegram(request: HttpRequest, context: Inv
     context.info(body);
 
     const username = body.message.from.username;
-    const firstName = body.message.from.first_name;
+    const id = body.message.from.id;
     const chatId = body.message.chat.id;
     const text = body.message.text;
 
     const bot = new TelegramBot(telegramBotKey);
 
-    if (userlist.indexOf(username) < 0 && userlist.indexOf(firstName) < 0) {
+    if (userlist.indexOf(username) < 0 && userlist.indexOf(String(id)) < 0) {
         bot.sendMessage(chatId, `Usuário não cadastrado`);
 
         return {
