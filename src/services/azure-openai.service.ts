@@ -47,7 +47,7 @@ export const getChatgptCompletion = async ({message, systemMessage} : {
     for await (const event of events) {
         for (const choice of event.choices) {
             const delta = choice.delta;
-            if (delta?.content !== undefined) {
+            if (delta?.content !== undefined && delta?.content.indexOf('[') < 0) {
                 answer += delta?.content;
             }
         }

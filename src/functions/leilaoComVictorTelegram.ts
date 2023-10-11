@@ -33,18 +33,20 @@ export async function leilaoComVictorTelegram(request: HttpRequest, context: Inv
 
     const body: TelegramMessage = JSON.parse(await request.text());
 
+    context.log(body);
+
     const username = body.message.from.username;
+    const firstName = body.message.from.first_name;
     const chatId = body.message.chat.id;
     const text = body.message.text;
 
     const bot = new TelegramBot(telegramBotKey);
 
-    if (userlist.indexOf(username) < 0) {
+    if (userlist.indexOf(username) < 0 && userlist.indexOf(firstName) < 0) {
         bot.sendMessage(chatId, `Usuário não cadastrado`);
 
         return {
-            body: `User is unauthorized`,
-            status: 401
+            body: `User is unauthorized`
         }
     }
     
