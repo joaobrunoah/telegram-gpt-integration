@@ -37,8 +37,8 @@ export const getChatgptCompletion = async ({message, systemMessage} : {
                     }
                 }]
             },
-            temperature: 0,
-            topP: 1,
+            temperature: 0.1,
+            topP: 0.95,
             maxTokens: 500, 
         }
     );
