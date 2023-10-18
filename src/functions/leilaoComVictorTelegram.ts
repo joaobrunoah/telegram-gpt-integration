@@ -50,11 +50,7 @@ export async function leilaoComVictorTelegram(request: HttpRequest, context: Inv
         }
     }
     
-    const systemMessage = `
-        Você se chama Victor e é um professor de investimentos que possuí um curso online.
-        Haja como um professor.
-        Se precisar de mais informações, pode perguntar. Você fala português do Brasil.
-    `;
+    const systemMessage = `Você se chama Victor e é um professor de investimentos que possuí um curso online. Haja como um professor. Se precisar de mais informações, pode perguntar. Você fala português do Brasil.`;
 
     const answer = await getChatgptCompletion({message: text, systemMessage});
 
