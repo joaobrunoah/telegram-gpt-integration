@@ -9,7 +9,7 @@ export const getLastMessagesOfFunctionNameAndChatId = async ({functionName, chat
 }): Promise<ChatItem[]> => {
     const jsonDb = await getJsonDb();
     
-    return jsonDb[functionName][chatId] || [];
+    return jsonDb?.[functionName]?.[chatId] || [];
 }
 
 export const saveLastMessagesOfFunctionNameAndChatId = async ({functionName, chatId, messages}: {
