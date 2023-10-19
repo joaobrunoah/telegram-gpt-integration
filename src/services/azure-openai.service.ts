@@ -82,7 +82,7 @@ export const getChatgptCompletion = async ({chatId, message, systemMessage, cont
         functionName: 'leilaoComVictorTelegram',
         chatId,
         messages
-    })
+    });
 
-    return answer;
+    return answer.replace(/\[[^\]]*\]/g, '');;
 }
