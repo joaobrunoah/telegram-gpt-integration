@@ -54,7 +54,7 @@ export async function leilaoComVictorTelegram(request: HttpRequest, context: Inv
         "Haja como um professor.\n" + 
         "Se precisar de mais informações, pode perguntar. Você fala português do Brasil.";
 
-    const answer = await getChatgptCompletion({message: text, systemMessage});
+    const answer = await getChatgptCompletion({chatId, message: text, systemMessage, context});
 
     bot.sendMessage(chatId, answer);
 
