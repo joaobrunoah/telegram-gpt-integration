@@ -58,8 +58,8 @@ export const getChatgptCompletion = async ({chatId, message, systemMessage, cont
                     }
                 }]
             },
-            temperature: 0,
-            topP: 1,
+            temperature: 0.05,
+            topP: 0.95,
             maxTokens: 500, 
         }
     );
